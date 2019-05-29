@@ -1,13 +1,12 @@
 package main
 
-//WALK関連のライブラリ
+// WALK
 import (
 	"github.com/lxn/win"
 	"github.com/lxn/walk"
 	. "github.com/lxn/walk/declarative"
 )
 
-//その他標準ライブラリ
 import (
     "fmt"
     "time"
@@ -22,16 +21,13 @@ const (
 
 func main() {
 
-	//----------------------------------------------------------
-	// 現在時刻の取得
-	//----------------------------------------------------------
 	t := time.Now()
     const layout = "2006/01/02 15:04:05"
 	current_time := " (" + t.Format(layout) + ")"
 	fmt.Println(current_time)
 
 	//----------------------------------------------------------
-	// ウィンドウ生成
+	// Create Window
 	//----------------------------------------------------------
 	mw := new(MyMainWindow)
 
@@ -65,9 +61,9 @@ func main() {
 				Children: []Widget{
 					HSpacer{},
 					PushButton{
-						Text: "閉じる",
+						Text: "Close",
 						OnClicked: func() {
-							// ログファイルに保存
+							// logging
 							file, err := os.OpenFile("./memo_log.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 							if err != nil {
 								log.Fatal(err)
@@ -80,7 +76,6 @@ func main() {
 							fmt.Fprintln(file, 	mw.textArea.Text())
 							fmt.Fprintln(file, 	"")
 
-							// ウィンドウをクローズ
 							mw.Close()
 						},
 					},
@@ -91,13 +86,13 @@ func main() {
 	}.Create()
 
 	//----------------------------------------------------------
-	// ウィンドウスタイルの設定
+	// Set Window Style
 	//----------------------------------------------------------
 	window_style := win.WS_CAPTION | win.WS_SIZEBOX | win.WS_MAXIMIZEBOX | win.WS_MINIMIZEBOX /* | win.WS_SYSMENU*/
 	win.SetWindowLong(mw.Handle(), win.GWL_STYLE, int32(window_style))
 
 	//----------------------------------------------------------
-    // ウィンドウ位置の設定
+    // Set Window Position
     //----------------------------------------------------------
 	xScreen := win.GetSystemMetrics(win.SM_CXSCREEN);
 	yScreen := win.GetSystemMetrics(win.SM_CYSCREEN);
@@ -113,14 +108,14 @@ func main() {
     )
 
 	//----------------------------------------------------------
-	// ウィンドウ表示
+	// Show
 	//----------------------------------------------------------
 	win.ShowWindow(mw.Handle(), win.SW_SHOW)
 
 	mw.Run()
 }
 
-// ウィンドウの定義
+// Window
 type MyMainWindow struct {
 	*walk.MainWindow
 	textArea *walk.TextEdit
