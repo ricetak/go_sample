@@ -99,7 +99,7 @@ func main() {
 
 	win.SetWindowPos(
 		mw.Handle(),
-		win.HWND_TOPMOST,	// 最前面ウィンドウ
+		win.HWND_TOPMOST,	// TOPMOST
 		(xScreen - SIZE_W)/2,
 		(yScreen - SIZE_H)/2,
 		SIZE_W,
